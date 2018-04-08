@@ -1,9 +1,23 @@
 // Requires
 var express = require('express');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 
 // Inicializar variables
 var app = express();
+
+
+// parse application/x-www-form-urlencoded
+
+// parse application/json
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
+// Importar rutas
+var appRoutes = require('./routes/app.route');
+var usuarioRoutes = require('./routes/usuario.route');
+var authRoutes = require('./routes/auth.route');
 
 //Conexión a la base de datos
 mongoose.connect('mongodb://localhost:27017/hospitalDb', (err, res) => {
@@ -19,11 +33,11 @@ app.listen(3000, () => {
     console.log('Express server puerto 3000', '\x1b[32m online\x1b[0m ');
 });
 
-app.get('/', (req, res, next) => {
-    res.status(200).json({
-        mensaje: 'El servicio aun no esta definido',
-        ok: 'true'
-    });
-});
+//Rutas
+app.use('/auth', authRoutes);
+app.use('/usuario', usuarioRoutes);
+app.use('/', appRoutes);
+
+
 
 // mongod --dbpath D:\mongoDb\data\db
