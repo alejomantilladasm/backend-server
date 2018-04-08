@@ -12,7 +12,7 @@ var usuarioSchema = new Schema({
     password: { type: String, required: [true, 'El password es un campo obligatorio'] },
     img: { type: String, required: false },
     role: { type: String, required: false, default: 'user-role', enum: rolesValids }
-});
+}, { collection: 'usuarios' });
 usuarioSchema.plugin(uniqueValidator, { message: 'El comapo {PATH} debe ser único' });
 
 module.exports = mongoose.model('Usuario', usuarioSchema);

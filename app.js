@@ -8,7 +8,6 @@ var app = express();
 
 
 // parse application/x-www-form-urlencoded
-
 // parse application/json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -17,6 +16,8 @@ app.use(bodyParser.json());
 // Importar rutas
 var appRoutes = require('./routes/app.route');
 var usuarioRoutes = require('./routes/usuario.route');
+var medicoRoutes = require('./routes/medico.route');
+var hospitalRoutes = require('./routes/hospital.route');
 var authRoutes = require('./routes/auth.route');
 
 //Conexión a la base de datos
@@ -34,6 +35,8 @@ app.listen(3000, () => {
 });
 
 //Rutas
+app.use('/hospital', hospitalRoutes);
+app.use('/medico', medicoRoutes);
 app.use('/auth', authRoutes);
 app.use('/usuario', usuarioRoutes);
 app.use('/', appRoutes);

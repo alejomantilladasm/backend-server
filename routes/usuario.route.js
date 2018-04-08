@@ -89,7 +89,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res, next) => {
 // ---------------------------------------------------------
 //  Actualizar usuario...
 // ---------------------------------------------------------
-app.put('/:id', (req, res, next) => {
+app.put('/:id', mdAutenticacion.verificaToken, (req, res, next) => {
     var id = req.params.id;
 
     Usuario.findById(id, (err, usuario) => {
@@ -142,7 +142,7 @@ app.put('/:id', (req, res, next) => {
 // ---------------------------------------------------------
 //  Eliminar usuario...
 // ---------------------------------------------------------
-app.delete('/:id', (req, res, next) => {
+app.delete('/:id', mdAutenticacion.verificaToken, (req, res, next) => {
     var id = req.params.id;
 
     Usuario.findByIdAndRemove(id, (err, usuario) => {
