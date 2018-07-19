@@ -18,6 +18,9 @@ var appRoutes = require('./routes/app.route');
 var usuarioRoutes = require('./routes/usuario.route');
 var medicoRoutes = require('./routes/medico.route');
 var hospitalRoutes = require('./routes/hospital.route');
+var busuqedaRoutes = require('./routes/busqueda.route');
+var uploadRoutes = require('./routes/upload.route');
+var imagenesRoutes = require('./routes/imagenes.route');
 var authRoutes = require('./routes/auth.route');
 
 //Conexión a la base de datos
@@ -35,6 +38,11 @@ app.listen(3000, () => {
 });
 
 //Rutas
+
+
+app.use('/imagenes', imagenesRoutes);
+app.use('/upload', uploadRoutes);
+app.use('/busqueda', busuqedaRoutes);
 app.use('/hospital', hospitalRoutes);
 app.use('/medico', medicoRoutes);
 app.use('/auth', authRoutes);

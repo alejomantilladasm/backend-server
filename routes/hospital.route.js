@@ -8,6 +8,8 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 // ---------------------------------------------------------
 
 app.get('/', (req, res, next) => {
+    var desde = req.query.desde || 0;
+    desde = Number(desde);
     Hospital.find({}, (err, hospitales) => {
         if (err) {
             return res.status(500).json({
@@ -16,12 +18,15 @@ app.get('/', (req, res, next) => {
                 errors: err
             });
         }
-        res.status(200).json({
-            ok: 'true',
-            hospitales: hospitales
-
+        Hospital.count({}, (err, count) => {
+            res.status(200).json({
+                ok: 'true',
+                hospitales: hospitales,
+                total: count
+            });
         });
-    });
+
+    }).populate('usuario', 'nombre email').limit(5).skip(desde);
 });
 
 // ---------------------------------------------------------
@@ -33,7 +38,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res, next) => {
 
     var hospital = new Hospital({
         nombre: body.nombre,
-        usuario: body.usuario,
+        usuario: req.usuario._id,
         img: body.img
     });
 
@@ -83,9 +88,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res, next) => {
 
 
         hospital.nombre = body.nombre;
-        if (body.usuario && '' != body.usuario) {
-            hospital.usuario = body.usuario;
-        }
+        hospital.usuario = req.usuario._id;
 
 
 

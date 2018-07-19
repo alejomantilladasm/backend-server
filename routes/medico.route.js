@@ -8,6 +8,9 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 // ---------------------------------------------------------
 
 app.get('/', (req, res, next) => {
+    var desde = req.query.desde || 0;
+    desde = Number(desde);
+
     Medico.find({}, (err, medicos) => {
         if (err) {
             return res.status(500).json({
@@ -16,12 +19,15 @@ app.get('/', (req, res, next) => {
                 errors: err
             });
         }
-        res.status(200).json({
-            ok: 'true',
-            medicos: medicos
-
+        Medico.count({}, (err, count) => {
+            res.status(200).json({
+                ok: 'true',
+                medicos: medicos,
+                total: count
+            });
         });
-    });
+
+    }).populate('usuario', 'nombre email').populate('hospital').limit(5).skip(desde);
 });
 
 // ---------------------------------------------------------
@@ -34,7 +40,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res, next) => {
     var medico = new Medico({
         nombre: body.nombre,
         img: body.img,
-        usuario: body.usuario,
+        usuario: req.usuario._id,
         hospital: body.hospital
     });
 
@@ -85,23 +91,23 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res, next) => {
 
 
         medico.nombre = body.nombre;
+        medico.usuario = req.usuario._id,
 
 
+            medico.save((err, usr) => {
 
-        medico.save((err, usr) => {
-
-            if (err) {
-                return res.status(400).json({
-                    mensaje: 'Error actualizando medico ...!',
-                    ok: 'false',
-                    errors: err
+                if (err) {
+                    return res.status(400).json({
+                        mensaje: 'Error actualizando medico ...!',
+                        ok: 'false',
+                        errors: err
+                    });
+                }
+                res.status(200).json({
+                    ok: 'true',
+                    mensaje: 'medico actualizando ...!',
                 });
-            }
-            res.status(200).json({
-                ok: 'true',
-                mensaje: 'medico actualizando ...!',
-            });
-        })
+            })
 
     });
 
