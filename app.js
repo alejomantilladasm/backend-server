@@ -22,6 +22,7 @@ var busuqedaRoutes = require('./routes/busqueda.route');
 var uploadRoutes = require('./routes/upload.route');
 var imagenesRoutes = require('./routes/imagenes.route');
 var authRoutes = require('./routes/auth.route');
+var loginRoutes = require('./routes/login.route');
 
 //Conexión a la base de datos
 mongoose.connect('mongodb://localhost:27017/hospitalDb', (err, res) => {
@@ -40,6 +41,7 @@ app.listen(3000, () => {
 //Rutas
 
 
+app.use('/login', loginRoutes);
 app.use('/imagenes', imagenesRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/busqueda', busuqedaRoutes);

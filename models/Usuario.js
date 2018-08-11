@@ -11,7 +11,8 @@ var usuarioSchema = new Schema({
     email: { type: String, required: [true, 'El correo es un campo obligatorio'], unique: true },
     password: { type: String, required: [true, 'El password es un campo obligatorio'] },
     img: { type: String, required: false },
-    role: { type: String, required: false, default: 'user-role', enum: rolesValids }
+    role: { type: String, required: false, default: 'user-role', enum: rolesValids },
+    google: { type: Boolean, default: false }
 }, { collection: 'usuarios' });
 usuarioSchema.plugin(uniqueValidator, { message: 'El comapo {PATH} debe ser único' });
 
