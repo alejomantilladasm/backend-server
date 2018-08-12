@@ -65,7 +65,8 @@ app.post('/google', async(req, res, next) => {
                     res.status(200).json({
                         ok: 'true',
                         mensaje: 'Usuario autenticado ...!',
-                        token: token
+                        token: token,
+                        usuario: usuario
                     });
                 }
 

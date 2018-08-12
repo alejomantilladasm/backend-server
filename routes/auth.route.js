@@ -5,7 +5,7 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var SEED = require('../config/config').SEED;
 
-app.get('/login', (req, res, next) => {
+app.post('/login', (req, res, next) => {
 
     var body = req.body;
 
@@ -28,11 +28,12 @@ app.get('/login', (req, res, next) => {
             if (bcrypt.compareSync(body.password, usuario[0].password)) {
                 //Crear token
                 var token = jwt.sign({ usuaior: usuario[0] }, SEED, { expiresIn: 14400 });
-
+                usuario[0].password = '-.-';
                 res.status(200).json({
                     ok: 'true',
                     mensaje: 'Usuario autenticado ...!',
-                    token: token
+                    token: token,
+                    usuario: usuario[0]
                 });
             } else {
 
