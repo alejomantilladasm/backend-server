@@ -129,7 +129,6 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res, next) => {
 
 
         usuario.save((err, usr) => {
-
             if (err) {
                 return res.status(400).json({
                     mensaje: 'Error actualizando usuario ...!',
@@ -137,9 +136,11 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res, next) => {
                     errors: err
                 });
             }
+            usr.password = '-.-';
             res.status(200).json({
                 ok: 'true',
                 mensaje: 'Usuario actualizando ...!',
+                usuario: usr
             });
         })
 
