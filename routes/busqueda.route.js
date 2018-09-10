@@ -88,7 +88,7 @@ function busuqedaHospitales(busuqeda, regex) {
 function busuqedaUsuarios(busuqeda, regex) {
 
     return new Promise((resolve, rejects) => {
-        Usuario.find({}, 'nombre email role').or([{ nombre: regex }, { email: regex }]).exec((err, usuarios) => {
+        Usuario.find({}, 'nombre email role google img').or([{ nombre: regex }, { email: regex }]).exec((err, usuarios) => {
             if (err) {
                 rejects('Error al recuperar usuarios, ', err);
             } else {

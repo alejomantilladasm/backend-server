@@ -98,7 +98,8 @@ function subirPorTipo(tipo, nombre, id, res) {
 
             var pathAnterior = './uploads/usuarios/' + usuario.img;
             if (fs.existsSync(pathAnterior)) {
-                fs.unlink(pathAnterior);
+                //fs.unlink(pathAnterior);
+                fs.unlink(pathAnterior, err => { if (err) console.log(err) });
             }
 
             usuario.img = nombre;
@@ -138,7 +139,8 @@ function subirPorTipo(tipo, nombre, id, res) {
 
             var pathAnterior = './uploads/medicos/' + medico.img;
             if (fs.existsSync(pathAnterior)) {
-                fs.unlink(pathAnterior);
+                //fs.unlink(pathAnterior);
+                fs.unlink(pathAnterior, err => { if (err) console.log(err) });
             }
 
             medico.img = nombre;
@@ -181,7 +183,8 @@ function subirPorTipo(tipo, nombre, id, res) {
 
             var pathAnterior = './uploads/hospitales/' + hospital.img;
             if (fs.existsSync(pathAnterior)) {
-                fs.unlink(pathAnterior);
+                //fs.unlink(pathAnterior);
+                fs.unlink(pathAnterior, err => { if (err) console.log(err) });
             }
 
             hospital.img = nombre;
