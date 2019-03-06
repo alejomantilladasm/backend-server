@@ -102,7 +102,7 @@ function busuqedaUsuarios(busuqeda, regex) {
 function busuqedaMedicos(busuqeda, regex) {
 
     return new Promise((resolve, rejects) => {
-        Medico.find({ nombre: regex }).populate('usuario', 'nombre email').populate('hospital', 'nombre').exec((err, medicos) => {
+        Medico.find({ nombre: regex }).populate('usuario', 'nombre email img').populate('hospital', 'nombre').exec((err, medicos) => {
             if (err) {
                 rejects('Error al recuperar medicos, ', err);
             } else {

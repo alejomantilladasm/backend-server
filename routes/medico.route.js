@@ -27,7 +27,39 @@ app.get('/', (req, res, next) => {
             });
         });
 
-    }).populate('usuario', 'nombre email').populate('hospital').limit(5).skip(desde);
+    }).populate('usuario', 'nombre email img').populate('hospital').limit(5).skip(desde);
+});
+
+// ---------------------------------------------------------
+//  Actualizar medico...
+// ---------------------------------------------------------
+app.get('/:id', mdAutenticacion.verificaToken, (req, res, next) => {
+    var id = req.params.id;
+
+    Medico.findById(id, (err, medico) => {
+        if (err) {
+            return res.status(500).json({
+                mensaje: 'Error recuperando medico ...!',
+                ok: 'false',
+                errors: err
+            });
+        }
+
+        if (!medico) {
+            res.status(400).json({
+                ok: 'false',
+                mensaje: 'El medico con el id ' + id + ' no se encuentra ...!'
+            });
+        } else {
+            res.status(200).json({
+                ok: 'true',
+                medico: medico,
+                mensaje: 'medico encontrado ...!',
+            });
+        }
+
+
+    });
 });
 
 // ---------------------------------------------------------

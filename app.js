@@ -64,3 +64,4 @@ app.use('/', appRoutes);
 
 
 // mongod --dbpath D:\mongoDb\data\db
+// npm start
